@@ -1,5 +1,5 @@
 package model
 
-case class Product(color: String, size: String ) {
-
+case class Product(color: String, size: String) {
 }
+

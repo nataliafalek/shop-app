@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="myProducts">
+    <table class="table" *ngIf="products">
+      <thead>
+      <tr>
+        <th scope="col">rozmiar</th>
+        <th scope="col">kolor</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.size}} </td>
+        <td>{{product.color}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

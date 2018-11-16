@@ -1,0 +1,26 @@
+#order {
+  padding: 10px;
+  border: solid #B0B9B7;
+  background-color: #B0B9B7;
+  text-align: center;
+  opacity: 0.9;
+  color: #282828;
+}
+
+.form-group {
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+}
+
+#submit {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-color: #FE9000;
+}
+
+#save {
+  float: right;
+  background-color: #44534C;
+}

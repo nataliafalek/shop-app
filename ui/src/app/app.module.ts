@@ -4,38 +4,32 @@ import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { RouteExampleComponent } from './route-example/route-example.component';
-
 import { AppService } from './app.service';
 import { AppHttpInterceptorService } from './http-interceptor.service';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FormComponent } from './form/form.component';
+import { SummaryComponent } from './summary/summary.component';
 
 const routes: Routes = [
   {
-    path: 'scala',
-    component: RouteExampleComponent,
-    data: { technology: 'Scala' }
+    path: 'order',
+    component: FormComponent,
   },
   {
-    path: 'play',
-    component: RouteExampleComponent,
-    data: { technology: 'Play' }
-  },
-  {
-    path: 'angular',
-    component: RouteExampleComponent,
-    data: { technology: 'Angular' }
+    path: 'summary',
+    component: SummaryComponent,
   },
   {
     path: '**',
-    redirectTo: '/play',
-    pathMatch: 'full'
+    redirectTo: '/order',
   }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    RouteExampleComponent
+    FormComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +38,8 @@ const routes: Routes = [
       cookieName: 'Csrf-Token',
       headerName: 'Csrf-Token',
     }),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    BsDropdownModule.forRoot()
   ],
   providers: [
     AppService,
