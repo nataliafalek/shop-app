@@ -9,6 +9,7 @@ import { AppHttpInterceptorService } from './http-interceptor.service';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormComponent } from './form/form.component';
 import { SummaryComponent } from './summary/summary.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
       headerName: 'Csrf-Token',
     }),
     RouterModule.forRoot(routes),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    FormsModule
   ],
   providers: [
     AppService,

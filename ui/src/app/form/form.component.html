@@ -1,53 +1,82 @@
 <div class="container" id="order">
   <h3>Złóż zamówienie</h3>
-  <form>
+  <form #orderForm="ngForm">
     <div class="form-group row">
-      <label for="firstName">Imię</label>
-      <input id="firstName" type="text" class="form-control">
+      <label for="name">Imię</label>
+      <input id="name" name="name" type="text" required pattern="^[A-Z][a-z_]+$" [(ngModel)]="model.name"
+             class="form-control" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine"
+           class="alert alert-danger">
+        To pole jest wymagane. Imię powinno składać się z jednego wyrazu pisanego z wielkiej litery, bez cyfr i znaków
+        specjalnych.
+      </div>
     </div>
     <div class="form-group row">
       <label for="age">Wiek</label>
-      <input id="age" type="number" min="18" max="100" class="form-control">
+      <input id="age" name="age" type="number" required pattern="(1[89]|[2-9][0-9]|100)" [(ngModel)]="model.age"
+             min="18" max="100" class="form-control" #age="ngModel">
+      <div [hidden]="age.valid || age.pristine"
+           class="alert alert-danger">
+        To pole jest wymagane. Wartość w zakresie 18-100.
+      </div>
     </div>
+    <h3>Wybierz produkty</h3>
     <div class="form-group row">
-      <div class="btn-group" dropdown>
-        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                aria-controls="dropdown-basic">
-          Kolor <span class="caret"></span>
+      <div class="inline">
+        <select name="color" class="custom-select" [(ngModel)]="model.color">
+          <option disabled value="default">Wybierz kolor</option>
+          <option *ngFor="let color of colors">{{ color }}</option>
+        </select>
+      </div>
+      <div class="inline">
+        <label class="radio-inline" *ngFor="let size of sizes">
+          <input name="size" type="radio" value="{{size}}" [(ngModel)]="model.size"> {{ size }}
+        </label>
+      </div>
+      <div class="inline">
+        <button type='button' class="btn" id="save" [disabled]="!isQuantityMoreThanZero()"
+                (click)="saveProduct()">Zapisz
         </button>
-        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-            role="menu" aria-labelledby="button-basic">
-          <li role="menuitem"><a class="dropdown-item" href="#">Czerwony</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Zielony</a></li>
-          <li role="menuitem"><a class="dropdown-item" href="#">Niebieski</a></li>
-        </ul>
+      </div>
+      <div class="inline" [ngStyle]="visualizeSelectedColorAndSize()">
       </div>
     </div>
+    <div *ngIf="isSizeAndColorSelected() && ! isQuantityMoreThanZero()" class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      Przepraszamy, chwilowo nie mamy produktów tej kombinacji.
+    </div>
+    <h3>Wybrane produkty </h3>
     <div class="form-group row">
-      <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="checkedSizeS" name="defaultExampleRadios" checked
-               mdbInputDirective>
-        <label class="custom-control-label" for="checkedSizeS">S</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="checkedSizeM" name="defaultExampleRadios"
-               mdbInputDirective>
-        <label class="custom-control-label" for="checkedSizeM">M</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="checkedSizeL" name="defaultExampleRadios"
-               mdbInputDirective>
-        <label class="custom-control-label" for="checkedSizeL">L</label>
-      </div>
-      <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="checkedSizeXL" name="defaultExampleRadios"
-               mdbInputDirective>
-        <label class="custom-control-label" for="checkedSizeXL">XL</label>
-      </div>
+      <table class="table">
+        <tbody>
+        <tr *ngFor="let product of chosenProducts">
+          <td>{{product.color}}</td>
+          <td>{{product.size}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
     <div class="form-group row">
-      <button type="submit" class="btn" id="save">Zapisz</button>
-      <button type="submit" class="btn" id="submit">Wyślij</button>
+      <button id="submit" type="button" class="btn btn-default" [disabled]="!isValidForm(orderForm.form)"
+              (click)="onSubmit(); orderForm.reset()">Wyślij
+      </button>
+    </div>
+    <div *ngIf="isErrorOrdersQuantity" class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <h4>Błąd zamówienia</h4>
+      <ul *ngFor="let errorOrder of errorOrdersQuantity">
+        <li>Próbujesz zamówić {{errorOrder.orderQuantity}} szt produktu: {{errorOrder.color}}-{{errorOrder.size}}.
+          Dostępnych sztuk w magazynie: {{errorOrder.productQuantity}}. Spróbuj zamówić mniejszą ilość produktu.
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="isErrorOrder" class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <h4>Błąd zamówienia</h4>
+      Przepraszamy, chwilowo nie możesz złożyć zamówienia.
+    </div>
+    <div *ngIf="submitted">
+      Dziękujemy za złożone zamówienie!
     </div>
   </form>
 </div>

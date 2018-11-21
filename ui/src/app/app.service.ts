@@ -1,35 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 
-/**
- * Class representing application service.
- *
- * @class AppService.
- */
 @Injectable()
 export class AppService {
-  private serviceUrl = '/api/products';
-  // private dataPostTestUrl = '/api/postTest';
+  api = "http://localhost:9000/api";
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+    })
+  };
 
   constructor(private http: HttpClient) {
   }
 
-  /**
-   * Makes a http get request to retrieve the welcome message from the backend service.
-   */
   public getProducts() {
-    return this.http.get('http://localhost:9000/api/products').pipe(
+    return this.http.get(this.api + '/products').pipe(
       map(response => response)
     );
   }
 
-  /**
-   * Makes a http post request to send some data to backend & get response.
-   */
-  // public sendData(): Observable<any> {
-  //   return this.http.post(this.dataPostTestUrl, {});
-  // }
+  public gerOrdersSummary() {
+    return this.http.get(this.api + '/orderSummary').pipe(
+      map(response => response)
+    )
+  }
+  public sendOrder(object): Observable<any> {
+     return this.http.post(this.api + '/sendOrder', object, this.httpOptions);
+  }
 }

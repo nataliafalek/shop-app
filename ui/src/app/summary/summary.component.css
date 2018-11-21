@@ -1,7 +1,42 @@
-.myProducts {
+.orderSummary {
   padding: 10px;
-  border: solid #B0B9B7;
-  background-color: #B0B9B7;
+  border: solid #343a40;
+  background-color: #343a40;
+  text-align: center;
   opacity: 0.9;
-  color: #282828;
+  color:ghostwhite;
+  font-size: 20px;
+}
+
+.order {
+  cursor: pointer;
+  text-decoration: underline;
+  list-style-type: none;
+  padding: 10px;
+  margin: 10px;
+}
+.orderSummary h3 {
+  color: #FE9000;
+}
+
+.order:hover {
+  color: lightblue;
+}
+.ordersListed {
+  text-align: left;
+
+}
+
+.search-button {
+  text-align: center;
+}
+.button {
+  position: absolute;
+  top: 50%;
+}
+
+.btn {
+  background-color: #FE9000;
+  color: #343a40;
+  font-size: 20px;
 }

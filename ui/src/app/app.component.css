@@ -3,3 +3,7 @@
   background-image: none;
   background-repeat: no-repeat;
 }
+
+nav .navbar-nav a{
+  font-size: 20px;
+}

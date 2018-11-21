@@ -1,18 +1,18 @@
 <div class="container">
-  <div class="myProducts">
-    <table class="table" *ngIf="products">
-      <thead>
-      <tr>
-        <th scope="col">rozmiar</th>
-        <th scope="col">kolor</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{product.size}} </td>
-        <td>{{product.color}}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="orderSummary">
+    <h3>Podsumowanie zamówień</h3>
+    <div class="ordersListed">
+      <ul class="order" *ngFor="let order of orderSummary" (click)="makeOrderDetails(order.orderId)">
+        <li>Data zamówienia: {{order.date}}, imię: {{order.name}}, wiek: {{order.age}}</li>
+        <ul class="orderDetails" *ngIf="orderShouldBeVisible(order.orderId)">
+          <li *ngFor="let orderDetails of order.orderProducts">
+            Produkt: {{orderDetails.color}} - {{orderDetails.size}}, ilość: {{orderDetails.quantity}}
+          </li>
+        </ul>
+      </ul>
+    </div>
+    <div class="search-button">
+      <button type="button" class="btn btn-default" (click)="fetchData()">Szukaj</button>
+    </div>
   </div>
 </div>

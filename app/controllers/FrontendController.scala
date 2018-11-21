@@ -6,11 +6,6 @@ import play.api.Configuration
 import play.api.http.HttpErrorHandler
 import play.api.mvc._
 
-/**
-  * Frontend controller managing all static resource associate routes.
-  * @param assets Assets controller reference.
-  * @param cc Controller components reference.
-  */
 @Singleton
 class FrontendController @Inject()(assets: Assets, errorHandler: HttpErrorHandler, config: Configuration, cc: ControllerComponents) extends AbstractController(cc) {
 
